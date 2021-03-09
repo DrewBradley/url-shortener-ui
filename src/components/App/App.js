@@ -19,6 +19,13 @@ export class App extends Component {
     }))
   }
 
+  componentDidUpdate() {
+    getUrls()
+    .then(data => this.setState({
+      urls: data,
+    }))
+  }
+
   render() {
     return (
       <main className="App">
