@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, getShortUrls  } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -19,11 +19,9 @@ export class App extends Component {
     }))
   }
 
-  componentDidUpdate() {
-    getUrls()
-    .then(data => this.setState({
-      urls: data,
-    }))
+  makeShortUrl = (url, title) => {
+    getShortUrls(url, title)
+      .then(response => this.setState({ urls: [...this.state.urls, response] }))
   }
 
   render() {
@@ -31,7 +29,7 @@ export class App extends Component {
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm makeShortUrl={this.makeShortUrl} />
         </header>
 
         <UrlContainer urls={this.state.urls}/>

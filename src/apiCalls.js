@@ -18,5 +18,5 @@ export const getShortUrls = (urlToShorten, urlTitle) => {
     },
   })
       .then(response => response.json())
-      .then(data => console.log(data))
+      .then(data => { return data })
 }

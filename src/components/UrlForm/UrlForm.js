@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { getShortUrls } from '../../apiCalls';
 
 class UrlForm extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class UrlForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state)
-    getShortUrls(this.state.urlToShorten, this.state.title)
+    this.props.makeShortUrl(this.state.urlToShorten, this.state.title)
     this.clearInputs();
   }
 

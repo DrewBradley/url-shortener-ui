@@ -14,21 +14,17 @@ context('Network Requests', () => {
   })
 
   it.only('make a post request', () => {
-    cy.intercept('http://localhost:3001/useshorturl/1', {
-      statusCode: 200,
-      method: "POST",
-      body: JSON.stringify({
-        id: 2, 
-        long_url: "https://images.unsplash.com/photo...", short_url: "http://localhost:3001/useshorturl/2", title: 'Awesome photo'
-      }),
-      headers: {"Content-type": "application/json"},
-    })
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+        body: {
+          long_url: 'https://open.spotify.com/album/4VFG1DOuTeDMBjBLZT7hCK',
+          title: 'title 1'
+        }
+      });
 
-    cy.request('POST', 'http://localhost:3001/useshorturl/1')
-    .then((response) => {
-      expect(response).property('status').to.equal(200)
-      expect(response).to.include.keys('id', 'long_url', 'short_url', 'title')
-    })
+      cy.get('input[name=title]').type('title 1')
+      cy.get('input[name=urlToShorten]').type('https://open.spotify.com/album/4VFG1DOuTeDMBjBLZT7hCK')
+      cy.get('button').click()
+      cy.get('section').find('div').should('have.length', 2)
   })
 
 })
