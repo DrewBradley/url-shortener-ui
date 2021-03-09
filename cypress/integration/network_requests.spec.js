@@ -7,13 +7,12 @@ context('Network Requests', () => {
     cy.request('http://localhost:3001/useshorturl/1')
       .should((response) => {
         expect(response.status).to.eq(200)
-        expect(response.body).to.have.property('length').and.be.oneOf([500, 501])
         expect(response).to.have.property('headers')
-        expect(response).to.have.property('duration')
+        expect(response).to.have.property('body')
       })
   })
 
-  it.only('make a post request', () => {
+  it('make a post request', () => {
     cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
         body: {
           long_url: 'https://open.spotify.com/album/4VFG1DOuTeDMBjBLZT7hCK',
