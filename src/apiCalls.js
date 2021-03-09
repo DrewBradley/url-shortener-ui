@@ -9,6 +9,7 @@ export const getShortUrls = (urlToShorten, urlTitle) => {
     long_url: urlToShorten, 
     title: urlTitle
   })
+  console.log(postBody)
   return fetch('http://localhost:3001/api/v1/urls', {
     method: 'POST',
     body: postBody,
@@ -17,5 +18,5 @@ export const getShortUrls = (urlToShorten, urlTitle) => {
     },
   })
       .then(response => response.json())
-      .then(data => { return data })
+      .then(data => console.log(data))
 }
