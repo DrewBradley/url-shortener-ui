@@ -1,9 +1,8 @@
 context('Network Requests', () => {
-  beforeEach(() => {
-    cy.visit('http://localhost:3000/')
-  })
 
   it('make a get request', () => {
+    cy.intercept('http://localhost:3001/api/v1/urls', {body: './fixtures/GET.json'});
+    cy.visit('http://localhost:3000/')
     cy.request('http://localhost:3001/useshorturl/1')
       .should((response) => {
         expect(response.status).to.eq(200)
@@ -19,7 +18,7 @@ context('Network Requests', () => {
           title: 'title 1'
         }
       });
-
+      cy.visit('http://localhost:3000/')
       cy.get('input[name=title]').type('title 1')
       cy.get('input[name=urlToShorten]').type('https://open.spotify.com/album/4VFG1DOuTeDMBjBLZT7hCK')
       cy.get('button').click()
